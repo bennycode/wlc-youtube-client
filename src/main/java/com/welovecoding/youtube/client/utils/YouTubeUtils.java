@@ -20,15 +20,23 @@ public class YouTubeUtils {
     String title = videoEntry.getTitle().getPlainText();
     String code = YouTubeUtils.getYouTubeId(videoEntry);
 
-    Object[] values = new Object[]{
+    Object[] oldValues = new Object[]{
       playListId,
       code,
       title,
       "NULL"
     };
 
-    String query = String.format("INSERT INTO videos(id,playlist_id,code,title,description)VALUES(NULL,'%s','%s','%s',%s);", values);
+    String oldQuery = String.format("INSERT INTO videos(id,playlist_id,code,title,description)VALUES(NULL,'%s','%s','%s',%s);", oldValues);
 
-    return query;
+    Object[] newValues = new Object[]{
+      code,
+      title,
+      playListId
+    };
+
+    String newQuery = String.format("INSERT INTO `coding`.`VIDEO` (`CODE`, `ENABLED`, `TITLE`, `PLAYLIST_ID`) VALUES ('%s', '1', '%s', '%s');", newValues);
+
+    return newQuery;
   }
 }
